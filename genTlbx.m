@@ -18,11 +18,7 @@ cd('../..');
 p = pwd;
 cd(fileparts((mfilename('fullpath'))));
 
-if examples
-    fid  = fopen('bsp.tmpl','r');
-else
-    error('Non-Examples build not available');
-end
+fid  = fopen('bsp.tmpl','r');
 f=fread(fid,'*char')';
 fclose(fid);
 
@@ -30,6 +26,7 @@ f = strrep(f,'__REPO-ROOT__',p);
 f = strrep(f,'__VERSION__',v.Release);
 f = strrep(f,'__ML-RELEASE__',v.MATLAB);
 f = strrep(f,'__APP-NAME__',v.AppName);
+f = strrep(f,'__EXAMPLES-DIR__',v.ExamplesDir);
 
 fid  = fopen('../../bsp.prj','w');
 fprintf(fid,'%s',f);
